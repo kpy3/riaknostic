@@ -43,10 +43,8 @@ check() ->
     Stats = riaknostic_node:stats(),
     {ring_members, RingMembers} = lists:keyfind(ring_members, 1, Stats),
 
-    {SearchEnabled, _} = riaknostic_node:cluster_command(application, get_env, [riak_search, enabled]),
-
-    {_, X} = lists:unzip(SearchEnabled), 
-    NodesSearchEnabled = lists:zip(RingMembers, X),
+    {SearchEnabled, _} = riaknostic_node:cluster_command(application, get_env, [riak_search, enabled, false]),
+    NodesSearchEnabled = lists:zip(RingMembers, SearchEnabled),
 
     lists:append([
       [ {warning, {riak_search, NodesSearchEnabled}} || length(lists:usort(SearchEnabled)) > 1 ]
