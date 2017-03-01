@@ -41,8 +41,8 @@ valid() ->
 
 -spec check() -> [{lager:log_level(), term()}].
 check() ->
-    StrongConsistencyOption = riaknostic_config:get_app_env([riak_core, enable_consensus]),
-    { AAEOption, _ } = riaknostic_config:get_app_env([riak_kv, anti_entropy]),
+    StrongConsistencyOption = riaknostic_config:get_app_env([riak_core, enable_consensus, false]),
+    { AAEOption, _ } = riaknostic_config:get_app_env([riak_kv, anti_entropy, off]),
     maybe_strong_consistency_aae_misconfigured(StrongConsistencyOption, AAEOption).
 
 -spec maybe_strong_consistency_aae_misconfigured(boolean, on | off | any()) -> [ { term(), term() } ] | [].
